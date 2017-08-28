@@ -56,6 +56,7 @@ var DefaultClassNames = {
   tagInputField: "ReactTags__tagInputField",
   selected: "ReactTags__selected",
   tag: "ReactTags__tag",
+  tagsContainer: "ReactTags__tagsContainer",
   remove: "ReactTags__remove",
   suggestions: "ReactTags__suggestions",
   activeSuggestion: "ReactTags__activeSuggestion"
@@ -97,19 +98,19 @@ var ReactTags = function (_Component) {
   }, {
     key: "resetAndFocusInput",
     value: function resetAndFocusInput() {
+      this.textInput.value = "";
+      this.textInput.focus();
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
       var _props = this.props,
           autofocus = _props.autofocus,
           readOnly = _props.readOnly;
 
       if (autofocus && !readOnly) {
-        this.textInput.value = "";
-        this.textInput.focus();
+        this.resetAndFocusInput();
       }
-    }
-  }, {
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      this.resetAndFocusInput();
     }
   }, {
     key: "filteredSuggestions",
@@ -376,7 +377,11 @@ var ReactTags = function (_Component) {
         _react2.default.createElement(
           "div",
           { className: this.state.classNames.selected },
-          tagItems,
+          _react2.default.createElement(
+            "div",
+            { className: this.state.classNames.tagsContainer },
+            tagItems
+          ),
           this.props.inline && tagInput
         ),
         !this.props.inline && tagInput
